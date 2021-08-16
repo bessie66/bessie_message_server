@@ -1,1 +1,20 @@
+## YAML Template.
+#---
+line.bot:
+  channel-token: KDPIrnSbnjuvze5jDb0RQVaPbkmDiV29TFLeCBb1TbFUYTVDE63JpzXG6ZT50kcEn1CiQDZUgCYhQFfFx7XPM4CQ74H7k6XExrqfnsaCkRffcTq++U8w2rA6lligH3lXkkL2xefjobvEIwwKyiN8IQdB04t89/1O/w1cDnyilFU=
+  channel-secret: 3124c77394b138c2c7e0496c952fd0e9
+  handler.path: /callback
+  
+  
+#spring:
+#  resources:
+#    static-locations: classpath:/templates/,classpath:/static/,classpath:/images/
+#  mvc:
+#    static-path-pattern: /images/**
 
+
+
+#server:
+#  servlet:
+#    context-path: /BESSIE
+#  port: 2080

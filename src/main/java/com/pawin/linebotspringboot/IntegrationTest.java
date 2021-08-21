@@ -20,8 +20,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -31,7 +34,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -41,6 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.google.gson.Gson;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
@@ -62,6 +69,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
+
 public class IntegrationTest {
     @RestController
     @Slf4j
@@ -79,6 +88,43 @@ public class IntegrationTest {
 //        private Resource resource;
 
         
+        @Autowired
+        ResourceLoader resourceLoader;
+        
+        
+        public void writeImage() throws Exception {
+        	Resource resource = resourceLoader.getResource("classpath:/images/6.jpg");
+            
+        	
+        	System.out.println(resource.getFile());
+        	System.out.println(resource.getFile().exists());
+        	
+        	InputStream inputStream = resource.getInputStream();
+        	byte[] buffer = IOUtils.toByteArray(inputStream);
+        	
+        	
+        	final String picName = "src/main/resources/images/bessie20210821.jpg";
+        	
+        	File targetFile = new File(picName);
+//        	
+        	OutputStream outStream = new FileOutputStream(targetFile);
+        	outStream.write(buffer);
+        	IOUtils.closeQuietly(outStream);
+        	
+//        	ImageIO.write((RenderedImage)inputStream, "png", f);
+        	
+        	
+        	
+//            FileOutputStream os = new FileOutputStream("classpath:/images/6NEW.png");
+//            ImageIO.write((RenderedImage) inputStream, "png", os);
+            
+//            ImageIO.write(inputStream, "png", "/images/6.png");
+//            FileUtils.copyFile(screenshot, new File(os));
+         
+            System.out.println("writeImage END ");
+        }
+        
+        
 
         @PostMapping("/callbackArray")
         public void callbackArray(@NonNull @LineBotMessages List<Event> events) throws Exception {
@@ -93,11 +139,14 @@ public class IntegrationTest {
 
             
            
-            
+//            writeImage();
             
             for (Event event : events) {
                 this.handleEvent(event);
             }
+            
+            
+            
             
             
 //            System.out.println("PUSH API START ");
@@ -153,18 +202,30 @@ public class IntegrationTest {
                            InputStream is = new ByteArrayInputStream(imageBytes);
                            BufferedImage newBi = ImageIO.read(is);
 //                           newBi.getType();
-                           // add a text on top on the image, optional, just for fun
-                           Graphics2D g = newBi.createGraphics();
-                           g.setFont(new Font("TimesRoman", Font.BOLD, 30));
-                           g.setColor(Color.BLUE);
-                           g.drawString("BESSIE LINE BOT IMAGE SUCCESS =======> "+content.getId(), 100, 100);
-                           Path target = Paths.get("D:\\BESSIEtest\\"+content.getId()+".jpg");
-                           ImageIO.write(newBi, "png", target.toFile());
                            
+                           
+//                           // add a text on top on the image, optional, just for fun
+//                           Graphics2D g = newBi.createGraphics();
+//                           g.setFont(new Font("TimesRoman", Font.BOLD, 30));
+//                           g.setColor(Color.BLUE);
+//                           g.drawString("BESSIE LINE BOT IMAGE SUCCESS =======> "+content.getId(), 100, 100);
+//                           Path target = Paths.get("D:\\BESSIEtest\\"+content.getId()+".jpg");
+//                           ImageIO.write(newBi, "png", target.toFile());
+                    	
+                    	
+                    	final String picName = "src/main/resources/images/"+content.getId()+".jpg";
+                    	
+                    	File targetFile = new File(picName);
+//                    	
+                    	OutputStream outStream = new FileOutputStream(targetFile);
+                    	outStream.write(imageBytes);
+                    	IOUtils.closeQuietly(outStream);
                            
                 	   //send image to channel
+                    	BotApiResponse responseToCannel = lineMessagingClient.replyMessage(
+                                new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://fbb2-2001-b011-3803-14f4-6ca1-f77a-306-e632.ngrok.io/images/"+content.getId()+".jpg", "https://fbb2-2001-b011-3803-14f4-6ca1-f77a-306-e632.ngrok.io/images/"+content.getId()+".jpg"))).get();
 //                	   BotApiResponse responseToCannel = lineMessagingClient.replyMessage(
-//                             new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://6599b9f78289.ngrok.io/images/6.jpg", "https://6599b9f78289.ngrok.io/images/6.jpg"))).get();
+//                             new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://4b17-2001-b011-3803-14f4-5a-a33a-af73-febb.ngrok.io/images/6.jpg", "https://4b17-2001-b011-3803-14f4-5a-a33a-af73-febb.ngrok.io/images/6.jpg"))).get();
                     	   
                     	   
                     	   

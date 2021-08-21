@@ -223,7 +223,7 @@ public class IntegrationTest {
                            
                 	   //send image to channel
                     	BotApiResponse responseToCannel = lineMessagingClient.replyMessage(
-                                new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://fbb2-2001-b011-3803-14f4-6ca1-f77a-306-e632.ngrok.io/images/"+content.getId()+".jpg", "https://fbb2-2001-b011-3803-14f4-6ca1-f77a-306-e632.ngrok.io/images/"+content.getId()+".jpg"))).get();
+                                new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://bessielinebottest.de.r.appspot.com/images/"+content.getId()+".jpg", "https://bessielinebottest.de.r.appspot.com/images/"+content.getId()+".jpg"))).get();
 //                	   BotApiResponse responseToCannel = lineMessagingClient.replyMessage(
 //                             new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://4b17-2001-b011-3803-14f4-5a-a33a-af73-febb.ngrok.io/images/6.jpg", "https://4b17-2001-b011-3803-14f4-5a-a33a-af73-febb.ngrok.io/images/6.jpg"))).get();
                     	   

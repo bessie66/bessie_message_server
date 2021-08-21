@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pawin</groupId>
-	<artifactId>bessie_message_server</artifactId>
+	<artifactId>line-bot-spring-boot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bessie_message_server</name>
+	<name>line-bot-spring-boot</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>          
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -24,21 +25,47 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
-                <dependency>
-                    <groupId>com.linecorp.bot</groupId>
-                    <artifactId>line-bot-spring-boot</artifactId>
-                    <version>1.20.0</version>
-                </dependency>
-                
-                
-                <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-				<dependency>
-				    <groupId>commons-codec</groupId>
-				    <artifactId>commons-codec</artifactId>
-				    <version>1.15</version>
-				</dependency>
-                
-                
+		<dependency>
+			<groupId>com.linecorp.bot</groupId>
+			<artifactId>line-bot-spring-boot</artifactId>
+			<version>1.20.0</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.15</version>
+		</dependency>
+
+
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+
+
+
+
+
+<dependency>         
+    <groupId>org.springframework.boot</groupId>            
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>      
+</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -50,20 +77,15 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-                <!--lombok-->
-                <dependency>
-                    <groupId>org.projectlombok</groupId>
-                    <artifactId>lombok</artifactId>
-                    <version>1.18.4</version>
-                    <type>jar</type>
-                </dependency>
-<!--                <dependency>
-                    <groupId>Ab</groupId>
-                    <artifactId>Ab</artifactId>
-                    <version>1.0</version>
-                    <scope>system</scope>
-                    <type>jar</type>
-                </dependency>-->
+		<!--lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.4</version>
+			<type>jar</type>
+		</dependency>
+		<!-- <dependency> <groupId>Ab</groupId> <artifactId>Ab</artifactId> <version>1.0</version> 
+			<scope>system</scope> <type>jar</type> </dependency> -->
 	</dependencies>
 
 	<build>
@@ -71,14 +93,21 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-                                <executions>
-                                    <execution>
-                                        <goals>
-                                            <goal>repackage</goal>
-                                        </goals>
-                                    </execution>                                    
-                                </executions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+			<plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <fork>true</fork><!-- 如果没有该配置，devtools不会生效 -->
+            </configuration>
+        </plugin>
 		</plugins>
 	</build>
 

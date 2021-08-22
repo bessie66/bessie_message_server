@@ -130,28 +130,30 @@ public class IntegrationTest {
         public void callbackArray(@NonNull @LineBotMessages List<Event> events) throws Exception {
 //        public void callbackArray(@NonNull List<Event> events) throws Exception {
         	
-        	System.out.println("Bessie callbackArray request: "+ events);
         	
-        	System.out.println("Bessie callbackArray events.size(): "+ events.size());
-        	
-        	
-            log.info("Got request LIST >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>:  ", events);
-
-            
-           
-//            writeImage();
-            
-            for (Event event : events) {
-                this.handleEvent(event);
+        	try {
+	        	log.info("Bessie callbackArray request: "+ events);
+	        	
+	        	log.info("Bessie callbackArray events.size(): "+ events.size());
+	        	
+	        	
+	            log.info("Got request LIST >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>:  ", events);
+	
+	           
+	//            writeImage();
+	            
+	            for (Event event : events) {
+	                this.handleEvent(event);
+	            }
+	            
+	//            System.out.println("PUSH API START ");
+	//            this.post("push api success 00001 20210728");
+	            log.info("callbackArray END ");
+            }catch (Exception e) {
+            	
+            	log.error("callbackArray END >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ e);
+            	
             }
-            
-            
-            
-            
-            
-//            System.out.println("PUSH API START ");
-//            this.post("push api success 00001 20210728");
-            System.out.println("callbackArray END ");
             
         }
         
@@ -175,8 +177,8 @@ public class IntegrationTest {
                 
                 //ImageMessageContent
                 if (content instanceof ImageMessageContent) {
-                	System.out.println(" OK OK OK ImageMessageContent >>>>>>>>>>>>>>>>Start>>>>>>>"+content.getId());
-                	System.out.println(event.toString());
+                	log.info(" OK OK OK ImageMessageContent >>>>>>>>>>>>>>>>Start>>>>>>>"+content.getId());
+                	log.info(event.toString());
 //                       ImageMessageContent content = ((MessageEvent) event).getMessage();
                 	
 //                       String replyToken = ((MessageEvent) event).getReplyToken();
@@ -190,9 +192,8 @@ public class IntegrationTest {
                     	   headers.set("Authorization", "Bearer KDPIrnSbnjuvze5jDb0RQVaPbkmDiV29TFLeCBb1TbFUYTVDE63JpzXG6ZT50kcEn1CiQDZUgCYhQFfFx7XPM4CQ74H7k6XExrqfnsaCkRffcTq++U8w2rA6lligH3lXkkL2xefjobvEIwwKyiN8IQdB04t89/1O/w1cDnyilFU=");
                     	   HttpEntity<String> entity = new HttpEntity<String>(headers);
 //                    	   ResponseEntity<String> result = restTemplate.exchange("https://api-data.line.me/v2/bot/message/14482888801702/content", HttpMethod.GET, entity, String.class);
-//                    	   System.out.println(">>>>>>>>>>>>>>>>>getHeaders>>>>>>>>>>>>>>>>>>>> : "+result.getHeaders());
-//                    	   System.out.println(">>>>>>>>>>>>>>>>>getBody>>>>>>>>>>>>>>>>>>>> : "+result.getBody());
-//                    	   System.out.println(">>>>>>>>>>>>>>>>>getStatusCode>>>>>>>>>>>>>>>>>>>> : "+result.getStatusCode());
+                    	   log.info(">>>>>>>>>>>>>>>>>getHeaders>>>>>>>>>>>>>>>>>>>> : "+entity.getHeaders());
+                    	   log.info(">>>>>>>>>>>>>>>>>getBody>>>>>>>>>>>>>>>>>>>> : "+entity.getBody());
                     	   
                     	   
                     	 //save image to project
@@ -317,7 +318,7 @@ public class IntegrationTest {
 //                           throw new RuntimeException(e);
 //                       }
                 	
-                       System.out.println(" ImageMessageContent >>>>>>>>>>>>>>>>END>>>>>>>");
+                    	log.info(" ImageMessageContent >>>>>>>>>>>>>>>>END>>>>>>>");
                 	
                 }
                 
@@ -333,7 +334,7 @@ public class IntegrationTest {
             
             
             
-            System.out.println("handleEvent 結束");
+            log.info("handleEvent 結束");
             
             
         }

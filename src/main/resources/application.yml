@@ -6,14 +6,37 @@ line.bot:
   handler.path: /callback
   
   
-#spring:
-#  resources:
-#    static-locations: classpath:/templates/,classpath:/static/,classpath:/images/
-#  mvc:
-#    static-path-pattern: /images/**
+spring:
+  resources:
+    static-locations: classpath:/static/,classpath:/images/
+  mvc:
+    static-path-pattern: /images/**
+  thymeleaf:
+    cache: false
+#    prefix: classpath:/templates/,classpath:/static/,classpath:/images/
+#    suffix: .html
+#    encoding: UTF-8
+#    mode: HTML5 
 
+#新增那個目錄的檔案需要restart
+devtools:
+    restart:
+    #热部署生效
+    enabled: true
+    #设置重启的目录
+    additional-paths: classpath:/static/,classpath:/images/
+#    additional-paths: resources/**,static/**,templates/**
+    #该目录下的内容修改不重启
+    exclude: data/**
+#devtools:
+#    restart:
+#      additional-paths: classpath:/templates/,classpath:/static/,classpath:/images/
 
+ 
+# 排除那個目錄的檔案不需要restart
+# spring.devtools.restart.exclude=static/**,public/**
 
+    
 #server:
 #  servlet:
 #    context-path: /BESSIE

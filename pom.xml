@@ -57,13 +57,13 @@
 		</dependency>
 
 
-		<!-- 熱部署模組 -->
+		<!-- 熱部署模組 
 		<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-devtools</artifactId>
-		<optional>true</optional> <!-- 這個需要為 true 熱部署才有效 -->
+		<optional>true</optional>
 		</dependency>
-
+		-->
 
 
 

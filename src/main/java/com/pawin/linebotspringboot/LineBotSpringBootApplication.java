@@ -15,6 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +28,7 @@ import okhttp3.Response;
 
 //@LineMessageHandler
 @SpringBootApplication
+@ComponentScan(basePackages = "com.pawin")
 public class LineBotSpringBootApplication {
 
         static Path downloadedContentDir;

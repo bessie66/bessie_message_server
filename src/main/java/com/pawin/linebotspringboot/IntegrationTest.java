@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -34,8 +35,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpEntity;
@@ -121,8 +124,97 @@ public class IntegrationTest {
 //            ImageIO.write(inputStream, "png", "/images/6.png");
 //            FileUtils.copyFile(screenshot, new File(os));
          
-            System.out.println("writeImage END ");
+        	log.info("writeImage END ");
         }
+        
+        
+        
+        
+//        @PostMapping("/alex")
+//        public ResponseEntity<?> alex() throws Exception {
+//			
+//        	log.info("ALEX====================$$$$$$$$$=======");
+//            
+//        	try {
+//        		
+//        		
+//        		URL url =new URL("http://localhost:8080/images/6.jpg");
+//        		BufferedImage image = ImageIO.read(url);
+//        		ImageIO.write(image, "jpg",new File("images2/888.jpg"));
+//
+//        		
+//        		
+//        		
+////        		ClassPathResource resource = new ClassPathResource("classpath:/images/6.jpg");
+////	            File sourceFile = resource.getFile();
+////	             
+////	            log.info(String.valueOf(sourceFile.exists()));
+//////	            log.info(sourceFile.getPath());
+//        		
+////        		Resource resource = new Re       //resourceLoader.getResource("classpath:/images_test/6.jpg");
+////        		ClassPathResource resource = new ClassPathResource("classpath:/images/6.jpg");
+////                File sourceFile = resource.getFile();
+////                log.info(String.valueOf(sourceFile.exists()));
+//        	}catch(Exception e) {
+//        		e.printStackTrace();
+//        	}
+//        	
+//        	try {
+////        		ClassPathResource resource = new ClassPathResource("6.jpg");
+////                File sourceFile = resource.getFile();
+////                log.info(String.valueOf(sourceFile.exists()));
+//        	}catch(Exception e) {
+//        		e.printStackTrace();
+//        	}
+//            
+//            
+////        	Resource resourceTarget = new ClassPathResource("classpath:images/6.jpg");
+////        	log.info(String.valueOf(resourceTarget.getFile().exists()));
+//            
+//            
+////            File sourceFile = resource.getFile();
+////           
+////            log.info(String.valueOf(sourceFile.exists()));
+////            log.info(sourceFile.getPath());
+//        	
+////        	Resource resource = new ClassPathResource("classpath:images/6.jpg");
+////        	log.info(resource.getFile().getPath());
+//        	
+////        	Resource resourceTarget = new ClassPathResource("file:images2/999.jpg");
+////        	log.info(resourceTarget.getFile().getPath());
+////        	log.info(String.valueOf(resourceTarget.getFile().exists()));
+////        	Resource resource = new ClassPathResource("classpath:images/999.jpg");
+////        	BufferedImage bi = ImageIO.read(new ClassPathResource("classpath:images/6.jpg").getFile());
+//        	
+//        	
+//        	
+////        	OutputStream out = response.getOutputStream();
+////        	ImageIO.write(bi, "png", out);
+////        	out.close();
+//        	
+//        	
+////        	ClassPathResource classPathResource = new ClassPathResource("images");
+////        	InputStream inputStream = classPathResource.getInputStream();
+////        	File somethingFile = File.createTempFile("AAAA", ".pdf");
+////        	
+////        	FileUtils.copyInputStreamToFile(inputStream, somethingFile);
+//        	
+////            log.info("@@@@@@@@@@@@@@@@@@@@@@@@");
+////            ClassPathResource resource = new ClassPathResource("images");    
+////            File sourceFile = resource.getFile();
+////            
+////            
+////            final String picName = sourceFile.getPath()+"/"+content.getId()+".jpg";
+////            log.info("ALEX=========picName:"+picName);
+////            File targetFile = new File(picName);
+////            OutputStream outStream = new FileOutputStream(targetFile);
+////            outStream.write(imageBytes);
+////            IOUtils.closeQuietly(outStream);
+//        	
+//        	return null;
+//        	
+//        }
+//        
         
         
 
@@ -161,7 +253,11 @@ public class IntegrationTest {
         
 
         private void handleEvent(Event event) throws Exception {
+        	log.info("==============================OKOKOK==========================");
+        	
             if (event instanceof MessageEvent) {
+            	log.info("==============================文字OK==========================");
+            	
             	
                 MessageContent content = ((MessageEvent) event).getMessage();
                 
@@ -196,13 +292,24 @@ public class IntegrationTest {
                     	   log.info(">>>>>>>>>>>>>>>>>getBody>>>>>>>>>>>>>>>>>>>> : "+entity.getBody());
                     	   
                     	   
-                    	 //save image to project
                     	   ResponseEntity<byte[]> response = restTemplate.exchange("https://api-data.line.me/v2/bot/message/"+content.getId()+"/content", HttpMethod.GET, entity, byte[].class);
                     	   byte[] imageBytes = response.getBody();
-                    	// convert byte[] back to a BufferedImage
-                           InputStream is = new ByteArrayInputStream(imageBytes);
-                           BufferedImage newBi = ImageIO.read(is);
-//                           newBi.getType();
+                    	   InputStream is = new ByteArrayInputStream(imageBytes);
+                    	   BufferedImage newBi = ImageIO.read(is);
+                    	   ImageIO.write(newBi, "jpg",new File("images2/"+content.getId()+".jpg"));
+                    	   
+                    	   
+                    	   
+                    	   
+                    	   
+                    	   
+//                    	 //save image to project
+//                    	   ResponseEntity<byte[]> response = restTemplate.exchange("https://api-data.line.me/v2/bot/message/"+content.getId()+"/content", HttpMethod.GET, entity, byte[].class);
+//                    	   byte[] imageBytes = response.getBody();
+//                    	// convert byte[] back to a BufferedImage
+//                           InputStream is = new ByteArrayInputStream(imageBytes);
+//                           BufferedImage newBi = ImageIO.read(is);
+////                           newBi.getType();
                            
                            
 //                           // add a text on top on the image, optional, just for fun
@@ -212,19 +319,37 @@ public class IntegrationTest {
 //                           g.drawString("BESSIE LINE BOT IMAGE SUCCESS =======> "+content.getId(), 100, 100);
 //                           Path target = Paths.get("D:\\BESSIEtest\\"+content.getId()+".jpg");
 //                           ImageIO.write(newBi, "png", target.toFile());
-                    	
-                    	
-                    	final String picName = "src/main/resources/images/"+content.getId()+".jpg";
-                    	
-                    	File targetFile = new File(picName);
+//                        log.info("ALEX====================$$$$$$$$$=======");
+//                        ClassPathResource resource = new ClassPathResource("6.jpg");
+//                        File sourceFile = resource.getFile();
+//                       
+//                        log.info(String.valueOf(sourceFile.exists()));
+//                        log.info(sourceFile.getPath());
+                        
+//                        log.info("@@@@@@@@@@@@@@@@@@@@@@@@");
+//                        ClassPathResource resource = new ClassPathResource("images");    
+//                        File sourceFile = resource.getFile();
+//                        
+//                        
+//                        final String picName = sourceFile.getPath()+"/"+content.getId()+".jpg";
+//                        log.info("ALEX=========picName:"+picName);
+//                        File targetFile = new File(picName);
+//                        OutputStream outStream = new FileOutputStream(targetFile);
+//                        outStream.write(imageBytes);
+//                        IOUtils.closeQuietly(outStream);
+                        
+                        
+//                    	final String picName = "images/"+content.getId()+".jpg";
 //                    	
-                    	OutputStream outStream = new FileOutputStream(targetFile);
-                    	outStream.write(imageBytes);
-                    	IOUtils.closeQuietly(outStream);
+//                    	File targetFile = new File(picName);
+////                    	
+//                    	OutputStream outStream = new FileOutputStream(targetFile);
+//                    	outStream.write(imageBytes);
+//                    	IOUtils.closeQuietly(outStream);
                            
                 	   //send image to channel
                     	BotApiResponse responseToCannel = lineMessagingClient.replyMessage(
-                                new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://bessielinebottest.de.r.appspot.com/images/"+content.getId()+".jpg", "https://bessielinebottest.de.r.appspot.com/images/"+content.getId()+".jpg"))).get();
+                                new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://38eb-122-147-2-198.ngrok.io/images/"+content.getId()+".jpg", "https://38eb-122-147-2-198.ngrok.io/images/"+content.getId()+".jpg"))).get();
 //                	   BotApiResponse responseToCannel = lineMessagingClient.replyMessage(
 //                             new ReplyMessage(((MessageEvent) event).getReplyToken(),new ImageMessage("https://4b17-2001-b011-3803-14f4-5a-a33a-af73-febb.ngrok.io/images/6.jpg", "https://4b17-2001-b011-3803-14f4-5a-a33a-af73-febb.ngrok.io/images/6.jpg"))).get();
                     	   
